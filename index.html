@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SitesByAdam</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+    }
+    h1 {
+      color: #333;
+    }
+    label, select, button {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+    select, button {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #aaa;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .lang-select {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="lang-select">
+    <label for="lang">🌐</label>
+    <select id="lang" onchange="changeLang()">
+      <option value="ru">Рус</option>
+      <option value="en">Eng</option>
+      <option value="de">Deu</option>
+    </select>
+  </div>
+
+  <h1 id="title">SitesByAdam</h1>
+  <p id="subtitle">Выберите тему сайта, которую вы хотите заказать:</p>
+
+  <label for="topic" id="label-topic">Тема сайта:</label>
+  <select id="topic">
+    <option value="restaurant">Сайт для ресторана</option>
+    <option value="shop">Интернет-магазин</option>
+    <option value="portfolio">Портфолио</option>
+    <option value="blog">Личный блог</option>
+    <option value="services">Услуги</option>
+  </select>
+
+  <button id="order-btn" onclick="sendOrder()">Заказать</button>
+
+  <script>
+    const translations = {
+      ru: {
+        subtitle: "Выберите тему сайта, которую вы хотите заказать:",
+        label: "Тема сайта:",
+        button: "Заказать",
+        options: [
+          "Сайт для ресторана",
+          "Интернет-магазин",
+          "Портфолио",
+          "Личный блог",
+          "Услуги"
+        ]
+      },
+      en: {
+        subtitle: "Choose the website topic you'd like to order:",
+        label: "Website topic:",
+        button: "Order",
+        options: [
+          "Restaurant Website",
+          "Online Store",
+          "Portfolio",
+          "Personal Blog",
+          "Services"
+        ]
+      },
+      de: {
+        subtitle: "Wähle das Thema der Website, die du bestellen möchtest:",
+        label: "Website-Thema:",
+        button: "Bestellen",
+        options: [
+          "Restaurant Webseite",
+          "Online-Shop",
+          "Portfolio",
+          "Persönlicher Blog",
+          "Dienstleistungen"
+        ]
+      }
+    };
+
+    function changeLang() {
+      const lang = document.getElementById('lang').value;
+      document.getElementById('subtitle').innerText = translations[lang].subtitle;
+      document.getElementById('label-topic').innerText = translations[lang].label;
+      document.getElementById('order-btn').innerText = translations[lang].button;
+
+      const topicSelect = document.getElementById('topic');
+      const options = topicSelect.options;
+      translations[lang].options.forEach((text, i) => {
+        options[i].text = text;
+      });
+    }
+
+    function sendOrder() {
+      const topicSelect = document.getElementById('topic');
+      const topicText = topicSelect.options[topicSelect.selectedIndex].text;
+      const telegramUsername = 'ваш_ник'; // ← Замени на свой Telegram username
+      const message = encodeURIComponent("Здравствуйте! Я хочу заказать сайт на тему: " + topicText);
+      window.open("https://t.me/" + telegramUsername + "?text=" + message, "_blank");
+    }
+  </script>
+</body>
+</html>
